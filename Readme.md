@@ -20,7 +20,9 @@ Nginx должен использовать готовый докер-образ
       interval: 5s <br>
       timeout: 5s <br>
       retries: 5 <br></b><br>
-
+Проверка работает: <br>
+f03bb3d10875   nginx:alpine    "/docker-entrypoint.…"   16 minutes ago  <b>Up 16 minutes <u> (healthy) </u></b>  0.0.0.0:80->80/tcp   practik86_web_1 <br>
+<br>
 4. Запустить приложение через Docker Compose. <br>
 Результат: <br>
    Был запущен docker <br> <br>
