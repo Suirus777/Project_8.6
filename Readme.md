@@ -16,7 +16,10 @@ Nginx должен использовать готовый докер-образ
 Результат: <br>
    Был добавлен тест для php - сервиса который проверяет содержимое на наличие строки <b>«works»</b> в течении 5 секунд 5 проверок. <br>
      <b> healthcheck: <br>
-      test: curl -sS http://127.0.0.1 | grep -c works > /dev/null</b><br><br>
+      test: curl -sS http://127.0.0.1 | grep -c works > /dev/null<br>
+      interval: 5s <br>
+      timeout: 5s <br>
+      retries: 5 <br></b><br>
 
 4. Запустить приложение через Docker Compose. <br>
 Результат: <br>
