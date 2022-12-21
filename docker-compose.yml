@@ -1,0 +1,41 @@
+# Версия docker-compose
+version: "3.9"
+
+# Список наших сервисов (контейнеров)
+services:
+  # указываем путь к dockerfile PHP и говорим что его надо собрать
+  php:
+    # Собираем Docker PHP из готового ./Dockerfile
+    build: .
+    # монтируем содержимое каталога для  сайта
+    volumes:
+      - ./www:/var/www
+
+  # Собираем docker NGINX
+  web:
+    # используем последний стабильный образ nginx - alpine
+    image: nginx:alpine
+    # указываем порт для проброса
+    ports:
+      - 80:80
+    # указываем зависимость от docker PHP
+    depends_on:
+      - php
+    # монтируем директории из хоста с настройками NGINX, директорией для хранени логов и и содержимым сайта index.php
+    volumes:
+      # настройки NGINX
+      - ./nginx:/etc/nginx/conf.d      
+      # содержимое сайта
+      - ./www:/var/www
+      # директория для хранения логов
+      - ./logs:/var/log/nginx
+    # nginx должен общаться с php контейнером
+    links:
+      - php
+
+    # тестирование healthcheck для php-сервиса, проверка содержимого сайта на наличие строки «works»
+    healthcheck:
+      test: curl -sS http://127.0.0.1 | grep -c works > /dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 5
