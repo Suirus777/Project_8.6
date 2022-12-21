@@ -35,7 +35,11 @@ services:
 
     # тестирование healthcheck для php-сервиса, проверка содержимого сайта на наличие строки «works»
     healthcheck:
+      # При помощи grep ищем в содержимом страницы index.php слово "works"
       test: curl -sS http://127.0.0.1 | grep -c works > /dev/null
+      # переодичность 5 сек
       interval: 5s
+      # с перерывом 5 сек
       timeout: 5s
+      # колличество повторений
       retries: 5
